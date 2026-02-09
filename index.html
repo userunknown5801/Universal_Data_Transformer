@@ -1,0 +1,1109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <!-- Judul baru yang lebih unik dan menarik -->
+  <title>RainbowConvert Pro - Universal Data Transformer</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b0f13">
+  <style>
+    :root {
+      --bg: #0b0f13;
+      --panel: #10161c;
+      --line: #1b2330;
+      --text: #e6eef3;
+      --muted: #9aa3ad;
+      --accent: #1e88ff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, Segoe UI, Roboto, Arial;
+    }
+
+    header {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      background: #0f1318;
+      border-bottom: 1px solid var(--line);
+    }
+
+    header h1 {
+      font-size: 16px;
+      margin: 0;
+      /* --- Efek Rainbow Text dengan Shine untuk H1 --- */
+      background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+      background-size: 200% auto; /* Ukuran gradient lebih lebar dari teks untuk animasi */
+      -webkit-background-clip: text; /* Potong background sesuai bentuk teks */
+      -webkit-text-fill-color: transparent; /* Jadikan teks transparan agar background terlihat */
+      background-clip: text;
+      color: transparent; /* Fallback untuk browser non-webkit */
+      animation: rainbow-text 8s linear infinite; /* Animasi pergerakan rainbow */
+      display: inline-block; /* Penting agar background-clip bekerja */
+      position: relative; /* Untuk efek shine pseudo-element */
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.3); /* Kilauan dasar */
+    }
+
+    /* Keyframes untuk animasi rainbow text */
+    @keyframes rainbow-text {
+      to {
+        background-position: 200% center; /* Gerakkan gradient dari kiri ke kanan */
+      }
+    }
+
+    /* Efek Shine untuk H1 menggunakan pseudo-element */
+    header h1::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%; /* Mulai dari luar layar kiri */
+      width: 50%; /* Lebar efek kilauan */
+      height: 100%;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
+      transform: skewX(-20deg); /* Sudut kilauan */
+      animation: text-shine 3s infinite linear; /* Animasi pergerakan kilauan */
+      pointer-events: none; /* Memungkinkan interaksi dengan elemen di bawahnya */
+      mix-blend-mode: screen; /* Mode blending untuk efek kilauan yang lebih baik */
+    }
+
+    /* Keyframes untuk animasi kilauan teks */
+    @keyframes text-shine {
+      0% {
+        left: -100%;
+      }
+      100% {
+        left: 150%; /* Gerakkan kilauan melintasi teks dan keluar layar kanan */
+      }
+    }
+    /* --- Akhir Efek Rainbow Text dengan Shine untuk H1 --- */
+
+
+    .icon-btn {
+      background: none;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: #cfd6e0;
+      padding: 6px 8px;
+      cursor: pointer;
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 12px auto;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 12px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    textarea,
+    select,
+    input {
+      width: 100%;
+      background: #0b0f13;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--text);
+      padding: 8px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 120px;
+      font-family: monospace;
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin: 8px 0;
+    }
+
+    .btn {
+      /* --- Efek Rainbow Button dengan Shine --- */
+      background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3); /* Latar belakang rainbow */
+      background-size: 300% auto; /* Ukuran gradient lebih lebar untuk animasi */
+      color: white; /* Warna teks tombol agar kontras dengan rainbow */
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      position: relative; /* Untuk efek shine pseudo-element */
+      overflow: hidden; /* Sembunyikan kilauan yang keluar dari batas tombol */
+      transition: all 0.3s ease; /* Transisi halus untuk hover */
+      animation: rainbow-button 6s linear infinite; /* Animasi pergerakan rainbow */
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); /* Kilauan dasar */
+    }
+
+    .btn:hover {
+      transform: translateY(-2px); /* Efek angkat saat hover */
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 25px rgba(255, 255, 255, 0.5); /* Kilauan lebih kuat saat hover */
+    }
+
+    /* Keyframes untuk animasi rainbow button */
+    @keyframes rainbow-button {
+      to {
+        background-position: 300% center; /* Gerakkan gradient dari kiri ke kanan */
+      }
+    }
+
+    /* Efek Shine untuk tombol menggunakan pseudo-element */
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%; /* Mulai dari luar layar kiri */
+      width: 30%; /* Lebar efek kilauan */
+      height: 100%;
+      background: rgba(255, 255, 255, 0.3); /* Warna kilauan (putih transparan) */
+      transform: skewX(-20deg); /* Sudut kilauan */
+      animation: button-shine 2s infinite linear; /* Animasi pergerakan kilauan */
+      animation-delay: 0.5s; /* Penundaan agar tidak terlalu sering */
+      pointer-events: none;
+    }
+
+    /* Keyframes untuk animasi kilauan tombol */
+    @keyframes button-shine {
+      0% {
+        left: -100%;
+      }
+      100% {
+        left: 150%; /* Gerakkan kilauan melintasi tombol dan keluar layar kanan */
+      }
+    }
+    /* --- Akhir Efek Rainbow Button dengan Shine --- */
+
+    .ghost {
+      background: #0b0f13;
+      color: #cfd6e0;
+      border: 1px solid var(--line);
+    }
+
+    .result {
+      min-height: 220px;
+      white-space: pre-wrap;
+      font-family: monospace;
+      overflow: auto;
+    }
+
+    .list {
+      max-height: 44vh;
+    }
+
+    .small {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    footer {
+      grid-column: 1 / -1;
+      text-align: right;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 980px) {
+      .wrap {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* presets UI */
+    .presets {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .preset-list {
+      background: #0a0d10;
+      border: 1px solid var(--line);
+      padding: 8px;
+      border-radius: 8px;
+      max-height: 160px;
+      overflow: auto;
+    }
+
+    .preset-item {
+      padding: 6px;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.02);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .preset-item:last-child {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <!-- Judul header diubah dan akan memiliki efek rainbow -->
+    <h1>RainbowConvert Pro — Universal Data Transformer</h1>
+    <div style="display:flex;gap:6px">
+      <button id="btnPaste" class="icon-btn" title="Paste from clipboard">📋</button>
+      <button id="btnClear" class="icon-btn" title="Clear input">🗑</button>
+      <button id="btnSwap" class="icon-btn" title="Swap input/result">↕</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- left: main converter + batch area -->
+    <section class="card">
+      <div class="label">Input (single or multiple lines for batch)</div>
+      <textarea id="input" placeholder="Enter or paste data here. For batch mode, use each item on its own line."></textarea>
+
+      <div class="row">
+        <label class="small"><input id="useFile" type="checkbox"> Use file</label>
+        <input id="file" type="file" />
+        <label class="small"><input id="auto" type="checkbox"> Auto convert</label>
+        <label class="small" style="margin-left:auto"><input id="batchMode" type="checkbox"> Batch mode</label>
+      </div>
+
+      <div class="label">Converter list</div>
+      <select id="mode" size="10" class="list">
+        <optgroup label="Text & Encoding">
+          <option value="text_base64">Text ↔ Base64</option>
+          <option value="text_unicode">Text ↔ Unicode (\\uXXXX)</option>
+          <option value="text_url">Text ↔ URL Encoding</option>
+          <option value="text_html">Text ↔ HTML Escape</option>
+          <option value="text_utf8">Text ↔ Bytes (UTF-8 Hex)</option>
+          <option value="text_utf16le">Text ↔ Bytes (UTF-16LE Hex)</option>
+          <option value="text_utf16be">Text ↔ Bytes (UTF-16BE Hex)</option>
+          <option value="text_iso8859">Text ↔ Bytes (ISO-8859-1)</option>
+          <option value="text_cp1251">Text ↔ Bytes (CP1251)</option>
+        </optgroup>
+        <optgroup label="Hash">
+          <option value="md5">Text → MD5</option>
+          <option value="sha1">Text → SHA-1</option>
+          <option value="sha224">Text → SHA-224</option>
+          <option value="sha256">Text → SHA-256</option>
+          <option value="sha384">Text → SHA-384</option>
+          <option value="sha512">Text → SHA-512</option>
+        </optgroup>
+        <optgroup label="Numbers">
+          <option value="dec_bin">Decimal ↔ Binary</option>
+          <option value="dec_oct">Decimal ↔ Octal</option>
+          <option value="dec_hex">Decimal ↔ Hex</option>
+          <option value="dec_hex0x">Decimal ↔ Hex (0x0)</option>
+          <option value="dec_hex32">Decimal ↔ Hex (0x00000000)</option>
+          <option value="float_hex32">Float ↔ Hex (32-bit)</option>
+          <option value="float_hex64">Double ↔ Hex (64-bit)</option>
+        </optgroup>
+        <optgroup label="Color">
+          <option value="color_hex_argb">Color ↔ ARGB (0xAARRGGBB)</option>
+          <option value="color_hex_rgb">Color ↔ Hex RGB (#RRGGBB)</option>
+          <option value="color_dec">Color ↔ Decimal</option>
+          <option value="color_argb">Color ↔ A,R,G,B</option>
+          <option value="color_smali">Color ↔ Smali</option>
+        </optgroup>
+        <optgroup label="Date">
+          <option value="date_ms">Date ↔ Milliseconds</option>
+          <option value="date_hex">Date ↔ Hex</option>
+        </optgroup>
+      </select>
+
+      <div class="row" style="margin-top:10px">
+        <div style="flex:1">
+          <div class="small">Output format</div>
+          <select id="outFormat">
+            <option value="text">Text</option>
+            <option value="hex">Hex (utf-8)</option>
+            <option value="base64">Base64</option>
+          </select>
+        </div>
+
+        <div style="width:160px">
+          <div class="small">Direction</div>
+          <select id="direction">
+            <option value="auto">Auto</option>
+            <option value="encode">Encode / From text</option>
+            <option value="decode">Decode / To text</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:10px">
+        <!-- Tombol Convert akan memiliki efek rainbow -->
+        <button id="convert" class="btn">Convert</button>
+        <button id="copyInput" class="ghost">Copy Input</button>
+        <button id="pasteInput" class="ghost">Paste Input</button>
+        <button id="clearInput" class="ghost">Clear</button>
+      </div>
+
+      <div style="margin-top:12px">
+        <div class="label">Batch options</div>
+        <div class="row">
+          <label class="small"><input id="batchTrim" type="checkbox" checked> Trim lines</label>
+          <label class="small"><input id="batchSkipEmpty" type="checkbox" checked> Skip empty</label>
+          <label class="small" style="margin-left:auto"><input id="batchShowIndex" type="checkbox"> Show index</label>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- right: result + presets -->
+    <aside class="card">
+      <div class="label">Result</div>
+      <div id="result" class="result">-- result will appear here --</div>
+
+      <div class="row" style="margin-top:8px">
+        <button id="copy" class="ghost">Copy Result</button>
+        <button id="download" class="ghost">Download</button>
+        <button id="bytes" class="ghost">Show Bytes</button>
+        <button id="formatJson" class="ghost">JSON Pretty</button>
+      </div>
+
+      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.02);margin:12px 0" />
+
+      <div class="label">Presets (Favorites)</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input id="presetName" placeholder="Preset name" style="flex:1" />
+        <button id="savePreset" class="btn">Save</button>
+      </div>
+
+      <div class="preset-list" id="presetList" style="margin-top:8px">
+        <!-- preset items will be injected here -->
+      </div>
+
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button id="exportPresets" class="ghost">Export</button>
+        <button id="importPresets" class="ghost">Import</button>
+        <input id="importFile" type="file" style="display:none" />
+      </div>
+
+      <div style="margin-top:12px" class="small">Presets are stored locally in your browser (localStorage).</div>
+    </aside>
+
+    <footer>Apktool M UI clone — Batch & Presets added — client-side only</footer>
+  </main>
+
+  <script>
+    /* ---------------------------
+       Utilities & conversion code
+       Comments inside are in English
+       --------------------------- */
+
+    /* DOM helpers */
+    const $ = id => document.getElementById(id);
+
+    /* Elements */
+    const inputEl = $('input');
+    const resultEl = $('result');
+    const modeEl = $('mode');
+    const convertBtn = $('convert');
+    const copyBtn = $('copy');
+    const downloadBtn = $('download');
+    const bytesBtn = $('bytes');
+    const formatJsonBtn = $('formatJson');
+
+    const pasteBtn = $('btnPaste'),
+      clearBtn = $('btnClear'),
+      swapBtn = $('btnSwap');
+    const copyInput = $('copyInput'),
+      pasteInput = $('pasteInput'),
+      clearInput = $('clearInput');
+
+    const useFile = $('useFile'),
+      fileInput = $('file');
+    const autoCheckbox = $('auto'),
+      batchModeCheckbox = $('batchMode');
+
+    const outFormat = $('outFormat'),
+      directionSel = $('direction');
+    const batchTrim = $('batchTrim'),
+      batchSkipEmpty = $('batchSkipEmpty'),
+      batchShowIndex = $('batchShowIndex');
+
+    /* Presets */
+    const presetNameEl = $('presetName');
+    const presetListEl = $('presetList');
+    const savePresetBtn = $('savePreset');
+    const exportPresetsBtn = $('exportPresets');
+    const importPresetsBtn = $('importPresets');
+    const importFileEl = $('importFile');
+
+    const STORAGE_KEY = 'apktoolm_presets_v1';
+
+    /* Text encoding helpers */
+    function strToU8(s) {
+      return new TextEncoder().encode(s);
+    }
+
+    function u8ToStr(u8) {
+      return new TextDecoder().decode(u8);
+    }
+
+    function u8ToHex(u8) {
+      return Array.from(u8).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function hexToU8(hex) {
+      hex = hex.replace(/\s+/g, '');
+      if (hex.length % 2) throw new Error('Invalid hex length');
+      const out = new Uint8Array(hex.length / 2);
+      for (let i = 0; i < out.length; i++) out[i] = parseInt(hex.substr(i * 2, 2), 16);
+      return out;
+    }
+
+    function u8ToBase64(u8) {
+      let s = '';
+      const chunk = 0x8000;
+      for (let i = 0; i < u8.length; i += chunk) s += String.fromCharCode.apply(null, Array.from(u8.subarray(i, i + chunk)));
+      return btoa(s);
+    }
+
+    function base64ToU8(b64) {
+      const bin = atob(b64);
+      const u8 = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+      return u8;
+    }
+
+    /* HTML escape/unescape */
+    function escapeHtml(s) {
+      return s.replace(/[&<>"']/g, c => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      })[c]);
+    }
+
+    function unescapeHtml(s) {
+      return s.replace(/&(#?\w+);/g, (m, g) => {
+        if (g[0] === '#') return String.fromCharCode(parseInt(g.slice(1)));
+        const map = {
+          amp: '&',
+          lt: '<',
+          gt: '>',
+          quot: '"',
+          apos: "'"
+        };
+        return map[g] || m;
+      });
+    }
+
+    /* SHA via SubtleCrypto */
+    async function shaDigest(alg, u8) {
+      const buf = await crypto.subtle.digest(alg, u8);
+      return new Uint8Array(buf);
+    }
+
+    /* MD5 (lightweight implementation) */
+    function md5(s) {
+      // public-domain style compact MD5 (input treated as UTF-8)
+      function rotl(n, c) {
+        return (n << c) | (n >>> (32 - c));
+      }
+
+      function toWords(str) {
+        const u = strToU8(str);
+        const len = u.length;
+        const w = [];
+        for (let i = 0; i < len; i += 4) w[i >> 2] = (u[i] || 0) | ((u[i + 1] || 0) << 8) | ((u[i + 2] || 0) << 16) | ((u[i + 3] || 0) << 24);
+        return {
+          w,
+          l: len * 8
+        };
+      }
+      const K = [];
+      for (let i = 0; i < 64; i++) K[i] = Math.floor(Math.abs(Math.sin(i + 1)) * Math.pow(2, 32)) >>> 0;
+      const {
+        w,
+        l
+      } = toWords(s);
+      w[(l >> 5)] = (w[(l >> 5)] || 0) | 0x80;
+      w[((((l + 64) >>> 9) << 4) + 14)] = l;
+      let a = 0x67452301,
+        b = 0xefcdab89,
+        c = 0x98badcfe,
+        d = 0x10325476;
+      for (let i = 0; i < w.length; i += 16) {
+        let A = a,
+          B = b,
+          C = c,
+          D = d;
+        for (let j = 0; j < 64; j++) {
+          let F, g;
+          if (j < 16) {
+            F = (B & C) | ((~B) & D);
+            g = j;
+          } else if (j < 32) {
+            F = (D & B) | ((~D) & C);
+            g = (5 * j + 1) % 16;
+          } else if (j < 48) {
+            F = B ^ C ^ D;
+            g = (3 * j + 5) % 16;
+          } else {
+            F = C ^ (B | (~D));
+            g = (7 * j) % 16;
+          }
+          const tmp = (A + F + K[j] + (w[i + g] || 0)) >>> 0;
+          A = D;
+          D = C;
+          C = B;
+          B = (B + rotl(tmp, [7, 12, 17, 22][j % 4] || 0)) >>> 0;
+        }
+        a = (a + A) >>> 0;
+        b = (b + B) >>> 0;
+        c = (c + C) >>> 0;
+        d = (d + D) >>> 0;
+      }
+      return [a, b, c, d].map(n => ('00000000' + (n >>> 0).toString(16)).slice(-8)).join('');
+    }
+
+    /* Float/double helpers */
+    function float32ToHex(f) {
+      const ab = new ArrayBuffer(4);
+      new DataView(ab).setFloat32(0, f, false);
+      return u8ToHex(new Uint8Array(ab));
+    }
+
+    function hexToFloat32(hex) {
+      return new DataView(hexToU8(hex).buffer).getFloat32(0, false);
+    }
+
+    function float64ToHex(f) {
+      const ab = new ArrayBuffer(8);
+      new DataView(ab).setFloat64(0, f, false);
+      return u8ToHex(new Uint8Array(ab));
+    }
+
+    function hexToFloat64(hex) {
+      return new DataView(hexToU8(hex).buffer).getFloat64(0, false);
+    }
+
+    /* Color helpers */
+    function parseHexColor(h) {
+      h = String(h).trim().replace(/^#/, '').replace(/^0x/i, '');
+      if (h.length === 3) h = h.split('').map(c => c + c).join('');
+      if (h.length === 6) return {
+        a: 255,
+        r: parseInt(h.slice(0, 2), 16),
+        g: parseInt(h.slice(2, 4), 16),
+        b: parseInt(h.slice(4, 6), 16)
+      };
+      if (h.length === 8) return {
+        a: parseInt(h.slice(0, 2), 16),
+        r: parseInt(h.slice(2, 4), 16),
+        g: parseInt(h.slice(4, 6), 16),
+        b: parseInt(h.slice(6, 8), 16)
+      };
+      throw new Error('Invalid hex color');
+    }
+
+    /* Date helpers */
+    function parseDateOrMs(s) {
+      s = String(s).trim();
+      if (/^0x/i.test(s)) return parseInt(s, 16);
+      if (/^\d+$/.test(s)) return Number(s);
+      const t = Date.parse(s);
+      if (isNaN(t)) throw new Error('Invalid date string');
+      return t;
+    }
+
+    /* ---------------------------
+       Conversion function for a single item
+       Returns a string result. Comments in English.
+       --------------------------- */
+    async function convertOne(mode, text, opts) {
+      // opts: {direction, outFormat}
+      const dir = opts && opts.direction ? opts.direction : 'auto';
+      const outFmt = opts && opts.outFormat ? opts.outFormat : 'text';
+      let out = '';
+
+      // Helper: auto-detect base64
+      function looksLikeBase64(s) {
+        s = s.trim();
+        return /^[A-Za-z0-9+/=\s]+$/.test(s) && s.length % 4 === 0;
+      }
+
+      try {
+        switch (mode) {
+          /* Text & encoding */
+          case 'text_base64':
+            if (dir === 'decode' || (dir === 'auto' && looksLikeBase64(text))) {
+              out = u8ToStr(base64ToU8(text.trim()));
+            } else {
+              out = u8ToBase64(strToU8(text));
+            }
+            break;
+
+          case 'text_unicode':
+            if (dir === 'decode' || (dir === 'auto' && /\\u/.test(text))) {
+              out = text.replace(/\\u\\{([0-9a-fA-F]+)\\}|\\u([0-9a-fA-F]{4})/g, (m, g1, g2) => {
+                const code = parseInt(g1 || g2, 16);
+                return String.fromCodePoint(code);
+              });
+            } else {
+              out = Array.from(text).map(ch => {
+                const cp = ch.codePointAt(0);
+                return cp <= 0xFFFF ? '\\u' + cp.toString(16).padStart(4, '0') : '\\u{' + cp.toString(16) + '}';
+              }).join('');
+            }
+            break;
+
+          case 'text_url':
+            if (dir === 'decode') out = decodeURIComponent(text);
+            else out = encodeURIComponent(text);
+            break;
+
+          case 'text_html':
+            if (dir === 'decode') out = unescapeHtml(text);
+            else out = escapeHtml(text);
+            break;
+
+          case 'text_utf8':
+            if (dir === 'decode') out = u8ToStr(hexToU8(text.replace(/\s+/g, '')));
+            else out = u8ToHex(strToU8(text));
+            break;
+
+          case 'text_utf16le':
+          case 'text_utf16be':
+            if (dir === 'decode') {
+              const u8 = hexToU8(text.replace(/\s+/g, ''));
+              const le = mode === 'text_utf16le';
+              const dv = new DataView(u8.buffer, u8.byteOffset, u8.byteLength);
+              let s = '';
+              for (let i = 0; i + 1 < u8.length; i += 2) s += String.fromCharCode(dv.getUint16(i, le));
+              out = s;
+            } else {
+              const buf = new ArrayBuffer(text.length * 2);
+              const dv = new DataView(buf);
+              const le = mode === 'text_utf16le';
+              for (let i = 0; i < text.length; i++) dv.setUint16(i * 2, text.charCodeAt(i), le);
+              out = u8ToHex(new Uint8Array(buf));
+            }
+            break;
+
+          case 'text_iso8859':
+          case 'text_cp1251':
+            // Best-effort using TextEncoder/TextDecoder labels if available, otherwise error message.
+            try {
+              if (dir === 'decode') {
+                const u8 = hexToU8(text.replace(/\s+/g, ''));
+                const label = mode === 'text_iso8859' ? 'iso-8859-1' : 'windows-1251';
+                out = new TextDecoder(label).decode(u8);
+              } else {
+                const label = mode === 'text_iso8859' ? 'iso-8859-1' : 'windows-1251';
+                out = u8ToHex(new TextEncoder(label).encode(text));
+              }
+            } catch (e) {
+              out = 'Encoding/decoding not supported in this environment';
+            }
+            break;
+
+          /* Hashes */
+          case 'md5':
+            out = md5(text);
+            break;
+          case 'sha1':
+            out = u8ToHex(await shaDigest('SHA-1', strToU8(text)));
+            break;
+          case 'sha224':
+            out = u8ToHex(await shaDigest('SHA-224', strToU8(text)));
+            break;
+          case 'sha256':
+            out = u8ToHex(await shaDigest('SHA-256', strToU8(text)));
+            break;
+          case 'sha384':
+            out = u8ToHex(await shaDigest('SHA-384', strToU8(text)));
+            break;
+          case 'sha512':
+            out = u8ToHex(await shaDigest('SHA-512', strToU8(text)));
+            break;
+
+          /* Numbers */
+          case 'dec_bin':
+            if (dir === 'decode') out = String(parseInt(text.replace(/\s+/g, ''), 2));
+            else out = String(Number(text).toString(2));
+            break;
+          case 'dec_oct':
+            if (dir === 'decode') out = String(parseInt(text.replace(/\s+/g, ''), 8));
+            else out = String(Number(text).toString(8));
+            break;
+          case 'dec_hex':
+          case 'dec_hex0x':
+          case 'dec_hex32':
+            if (dir === 'decode') {
+              let s = text.trim();
+              if (/^0x/i.test(s)) s = s.slice(2);
+              out = String(parseInt(s, 16));
+            } else {
+              const n = Number(text);
+              if (Number.isNaN(n)) throw new Error('Invalid number');
+              if (mode === 'dec_hex') out = n.toString(16);
+              else if (mode === 'dec_hex0x') out = '0x' + n.toString(16);
+              else out = '0x' + n.toString(16).padStart(8, '0');
+            }
+            break;
+          case 'float_hex32':
+            if (dir === 'decode') out = String(hexToFloat32(text.replace(/\s+/g, '')));
+            else out = float32ToHex(parseFloat(text));
+            break;
+          case 'float_hex64':
+            if (dir === 'decode') out = String(hexToFloat64(text.replace(/\s+/g, '')));
+            else out = float64ToHex(parseFloat(text));
+            break;
+
+          /* Color */
+          case 'color_hex_argb':
+          case 'color_hex_rgb':
+            if (dir === 'decode') {
+              try {
+                const obj = parseHexColor(text.trim());
+                out = `A=${obj.a} R=${obj.r} G=${obj.g} B=${obj.b}`;
+              } catch (e) {
+                out = 'Invalid color';
+              }
+            } else {
+              let s = text.trim();
+              if (/^#/.test(s) || /^0x/i.test(s) || /^[0-9A-Fa-f]{6,8}$/.test(s.replace(/^0x/i, ''))) {
+                const obj = parseHexColor(s);
+                out = mode === 'color_hex_argb' ? '0x' + [obj.a, obj.r, obj.g, obj.b].map(x => x.toString(16).padStart(2, '0')).join('').toUpperCase() : '#' + [obj.r, obj.g, obj.b].map(x => x.toString(16).padStart(2, '0')).join('').toUpperCase();
+              } else {
+                const parts = s.split(/[,\\s]+/).map(x => Number(x));
+                if (parts.length >= 3) {
+                  const [r, g, b] = parts;
+                  out = '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('').toUpperCase();
+                } else out = 'Provide #RRGGBB or R,G,B';
+              }
+            }
+            break;
+
+          case 'color_dec':
+          case 'color_argb':
+          case 'color_smali':
+            if (dir === 'decode') {
+              const s = text.trim().replace(/^0x/i, '');
+              const pad = (s.length === 6) ? 'FF' + s : s;
+              const obj = parseHexColor(pad);
+              out = `A=${obj.a}\nR=${obj.r}\nG=${obj.g}\nB=${obj.b}\nDecimal=${((obj.a<<24)>>>0) + (obj.r<<16) + (obj.g<<8) + obj.b}`;
+            } else {
+              const parts = text.trim().split(/[,\\s]+/).map(x => Number(x));
+              if (parts.length >= 3) {
+                let [a, r, g, b] = parts.length === 3 ? [255, ...parts] : parts;
+                a = Math.max(0, Math.min(255, a));
+                r = Math.max(0, Math.min(255, r));
+                g = Math.max(0, Math.min(255, g));
+                b = Math.max(0, Math.min(255, b));
+                const dec = (((a << 24) >>> 0) + (r << 16) + (g << 8) + b) >>> 0;
+                out = mode === 'color_smali' ? '0x' + dec.toString(16).padStart(8, '0') : String(dec);
+              } else out = 'Provide R,G,B or A,R,G,B';
+            }
+            break;
+
+          /* Date */
+          case 'date_ms':
+          case 'date_hex':
+            if (dir === 'decode') {
+              let s = text.trim();
+              if (/^0x/i.test(s)) s = parseInt(s, 16);
+              const ms = Number(s);
+              if (isNaN(ms)) throw new Error('Invalid ms');
+              out = new Date(ms).toISOString();
+            } else {
+              const ms = parseDateOrMs(text);
+              out = mode === 'date_ms' ? String(ms) : '0x' + ms.toString(16);
+            }
+            break;
+
+          default:
+            out = 'Mode not implemented';
+        }
+
+        // final output formatting
+        if (outFmt === 'hex') out = u8ToHex(strToU8(String(out)));
+        else if (outFmt === 'base64') out = u8ToBase64(strToU8(String(out)));
+
+        return String(out);
+      } catch (err) {
+        return 'Error: ' + (err && err.message ? err.message : String(err));
+      }
+    }
+
+    /* ---------------------------
+       Batch processing
+       --------------------------- */
+    async function processBatch(lines, mode, opts) {
+      const results = [];
+      for (let i = 0; i < lines.length; i++) {
+        let line = lines[i];
+        if (opts.trim) line = line.trim();
+        if (opts.skipEmpty && line === '') continue;
+        const res = await convertOne(mode, line, opts);
+        if (opts.showIndex) results.push(`${i+1}: ${res}`);
+        else results.push(res);
+      }
+      return results;
+    }
+
+    /* ---------------------------
+       Presets management (localStorage)
+       --------------------------- */
+    function loadPresets() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function savePresets(arr) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+    }
+
+    function renderPresetList() {
+      const arr = loadPresets();
+      presetListEl.innerHTML = '';
+      if (arr.length === 0) {
+        presetListEl.innerHTML = '<div class="small">No presets saved</div>';
+        return;
+      }
+      arr.forEach((p, idx) => {
+        const div = document.createElement('div');
+        div.className = 'preset-item';
+        div.innerHTML = `<div style="flex:1"><strong>${escapeHtml(p.name)}</strong><div class="small">${p.mode} · ${p.direction} · ${p.outFormat}</div></div>`;
+        const controls = document.createElement('div');
+
+        const applyBtn = document.createElement('button');
+        applyBtn.className = 'ghost';
+        applyBtn.textContent = 'Apply';
+        applyBtn.onclick = () => {
+          modeEl.value = p.mode;
+          directionSel.value = p.direction;
+          outFormat.value = p.outFormat;
+          presetNameEl.value = p.name;
+        };
+
+        const delBtn = document.createElement('button');
+        delBtn.className = 'ghost';
+        delBtn.textContent = 'Delete';
+        delBtn.onclick = () => {
+          const a = loadPresets();
+          a.splice(idx, 1);
+          savePresets(a);
+          renderPresetList();
+        };
+
+        controls.appendChild(applyBtn);
+        controls.appendChild(delBtn);
+        div.appendChild(controls);
+        presetListEl.appendChild(div);
+      });
+    }
+
+    /* ---------------------------
+       Event handlers & wiring
+       --------------------------- */
+    convertBtn.addEventListener('click', async () => {
+      // If file use selected, read file
+      try {
+        if (useFile.checked && fileInput.files.length) {
+          const txt = await fileInput.files[0].text();
+          inputEl.value = txt;
+        }
+      } catch (e) {
+        console.error(e);
+      }
+
+      const isBatch = batchModeCheckbox.checked;
+      if (!isBatch) {
+        const out = await convertOne(modeEl.value, inputEl.value, {
+          direction: directionSel.value,
+          outFormat: outFormat.value
+        });
+        resultEl.textContent = out;
+      } else {
+        const raw = inputEl.value.split(/\r?\n/);
+        const opts = {
+          direction: directionSel.value,
+          outFormat: outFormat.value,
+          trim: batchTrim.checked,
+          skipEmpty: batchSkipEmpty.checked,
+          showIndex: batchShowIndex.checked
+        };
+        const res = await processBatch(raw, modeEl.value, opts);
+        resultEl.textContent = res.join('\n');
+      }
+    });
+
+    pasteBtn.addEventListener('click', async () => {
+      try {
+        inputEl.value = await navigator.clipboard.readText();
+        if (autoCheckbox.checked) convertBtn.click();
+      } catch (e) {
+        alert('Clipboard access failed');
+      }
+    });
+    clearBtn.addEventListener('click', () => {
+      inputEl.value = '';
+      resultEl.textContent = '';
+    });
+    swapBtn.addEventListener('click', () => {
+      const t = inputEl.value;
+      inputEl.value = resultEl.textContent;
+      resultEl.textContent = t;
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(resultEl.textContent || '');
+        copyBtn.textContent = 'Copied';
+        setTimeout(() => copyBtn.textContent = 'Copy Result', 900);
+      } catch (e) {
+        alert('Copy failed');
+      }
+    });
+    downloadBtn.addEventListener('click', () => {
+      const b = new Blob([resultEl.textContent || ''], {
+        type: 'text/plain;charset=utf-8'
+      });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(b);
+      a.download = 'result.txt';
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+    });
+    bytesBtn.addEventListener('click', () => {
+      resultEl.textContent = u8ToHex(strToU8(resultEl.textContent || ''));
+    });
+    formatJsonBtn.addEventListener('click', () => {
+      try {
+        resultEl.textContent = JSON.stringify(JSON.parse(resultEl.textContent), null, 2);
+      } catch (e) {
+        alert('Invalid JSON');
+      }
+    });
+
+    copyInput.addEventListener('click', () => navigator.clipboard.writeText(inputEl.value || ''));
+    pasteInput.addEventListener('click', async () => {
+      inputEl.value = await navigator.clipboard.readText();
+    });
+    clearInput.addEventListener('click', () => inputEl.value = '');
+
+    fileInput.addEventListener('change', async () => {
+      if (useFile.checked && fileInput.files[0]) {
+        inputEl.value = await fileInput.files[0].text();
+        if (autoCheckbox.checked) convertBtn.click();
+      }
+    });
+    inputEl.addEventListener('input', () => {
+      if (autoCheckbox.checked) {
+        clearTimeout(window._auto);
+        window._auto = setTimeout(() => convertBtn.click(), 300);
+      }
+    });
+
+    /* Preset save/apply/export/import */
+    savePresetBtn.addEventListener('click', () => {
+      const name = (presetNameEl.value || '').trim();
+      if (!name) {
+        alert('Preset name required');
+        return;
+      }
+      const p = {
+        name,
+        mode: modeEl.value,
+        direction: directionSel.value,
+        outFormat: outFormat.value,
+        created: Date.now()
+      };
+      const arr = loadPresets();
+      arr.push(p);
+      savePresets(arr);
+      renderPresetList();
+      presetNameEl.value = '';
+    });
+
+    exportPresetsBtn.addEventListener('click', () => {
+      const arr = loadPresets();
+      const blob = new Blob([JSON.stringify(arr, null, 2)], {
+        type: 'application/json'
+      });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'presets.json';
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+    });
+
+    importPresetsBtn.addEventListener('click', () => importFileEl.click());
+    importFileEl.addEventListener('change', async () => {
+      if (!importFileEl.files.length) return;
+      try {
+        const txt = await importFileEl.files[0].text();
+        const parsed = JSON.parse(txt);
+        if (!Array.isArray(parsed)) throw new Error('Invalid preset file');
+        savePresets(parsed);
+        renderPresetList();
+        alert('Presets imported');
+      } catch (e) {
+        alert('Import failed: ' + e.message);
+      }
+    });
+
+    /* Initialize UI */
+    (function init() {
+      renderPresetList();
+      // set initial labels of copy button (for accessibility)
+      copyBtn.textContent = 'Copy Result';
+      copyInput.textContent = 'Copy Input';
+      pasteInput.textContent = 'Paste Input';
+      clearInput.textContent = 'Clear';
+    })();
+
+    /* Keyboard: Ctrl/Cmd+Enter to convert */
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        convertBtn.click();
+      }
+    });
+  </script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => {
+        console.log(`Service Worker registered: ${reg.scope}`);
+      })
+      .catch(err => {
+        console.error('Service Worker registration failed:', err);
+      });
+  });
+}
+</script>
+</body>
+</html>
