@@ -1,7 +1,5 @@
-// sw.js (Universal PWA Service Worker)
-const CACHE_NAME = 'universal-pwa-v1';
+const CACHE_NAME = 'universal-pwa-v∞';
 
-// Install -> prepare cache
 self.addEventListener('install', event => {
   self.skipWaiting();
   event.waitUntil(
@@ -9,32 +7,35 @@ self.addEventListener('install', event => {
   );
 });
 
-// Activate -> cleanup old caches (optional)
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
+    caches.keys().then(keys => {
+      return Promise.all(
         keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
-      )
-    )
+      );
+    })
   );
   self.clients.claim();
 });
 
-// Fetch -> network first for HTML, cache first for assets
 self.addEventListener('fetch', event => {
   const req = event.request;
 
-  // Only handle GET requests
+  // Only handle GET
   if (req.method !== 'GET') return;
 
-  // If request is HTML -> network first (always fresh)
-  if (req.headers.get('accept')?.includes('text/html')) {
+  const accept = req.headers.get('accept') || '';
+
+  // HTML: network-first (fresh), fallback to cache
+  if (accept.includes('text/html')) {
     event.respondWith(
       fetch(req)
         .then(res => {
-          const resClone = res.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(req, resClone));
+          // Only cache valid responses
+          if (res && res.status === 200 && res.type === 'basic') {
+            const clone = res.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(req, clone));
+          }
           return res;
         })
         .catch(() => caches.match(req))
@@ -42,14 +43,21 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // For other assets (JS, CSS, images) -> cache first
+  // Assets: cache-first, then network
   event.respondWith(
     caches.match(req).then(cacheRes => {
-      return cacheRes || fetch(req).then(netRes => {
-        const netClone = netRes.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(req, netClone));
-        return netRes;
-      });
+      if (cacheRes) return cacheRes;
+
+      return fetch(req)
+        .then(netRes => {
+          // Avoid caching opaque or error responses
+          if (netRes && netRes.status === 200 && netRes.type === 'basic') {
+            const clone = netRes.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(req, clone));
+          }
+          return netRes;
+        })
+        .catch(() => cacheRes);
     })
   );
 });
