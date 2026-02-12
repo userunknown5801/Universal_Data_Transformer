@@ -1,6 +1,6 @@
 {
-  "name": "Converter App",
-  "short_name": "Universal Data Transformer (Converter) App",
+  "name": "Converter APP",
+  "short_name": "Universal Data Transformer (Converter) APP",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
